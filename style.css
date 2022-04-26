@@ -1,0 +1,115 @@
+body{
+    margin: 0 100px;
+    display: grid;
+    height: 100vh;
+    grid-template-areas: 
+    "header header"
+    "main aside"
+    "footer footer";
+
+    grid-template-rows: 80px 1fr 30px;
+    grid-template-columns: 1fr 500px;
+
+}
+
+header{
+    grid-area: header;
+
+}
+
+main{
+    grid-area: main;
+}
+
+aside{
+    grid-area: aside;
+}
+
+footer{
+    background-color: gray;
+    grid-area: footer;
+}
+
+.head{
+    display: flex;
+    height: 80px;
+    align-items: center;
+}
+
+.logo a{
+    text-decoration: none;
+    border-bottom: 6px solid #b5c601;
+    border-radius: 6px;
+    font-size: 40px;
+    color: grey;
+}
+
+.header-buttons{
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-buttons a{
+    text-decoration: none;
+    color: grey;
+    font-size: 25px;
+    padding: 0 0 0 20px;
+}
+
+.home-button{
+    padding: 0 0 0 1vw;
+}
+
+.right-buttons{
+    padding: 0 10vw 0 0;
+}
+
+.right-buttons img{
+    height: 19px;
+    width: 21px;
+}
+/* END HEADER CSS*/
+
+/* START MAIN CSS*/
+
+.container{
+    padding: 80px 0 0 0;
+}
+
+.container p{
+    font-size: 25px;
+    padding: 15px 0 0 0;
+}
+
+.container strong{
+    font-size: 25px;
+}
+
+
+.list-of-games{
+    padding: 20px 0;
+    width: 500px;
+    height: 30px;
+    display: flex;
+}
+
+.button-of-games{
+    width: 500px;
+    height: 30px;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px 0 5px;
+}
+.cart-button{
+    background-color: green;
+    width: 200px;
+    height: 50px;
+}
+
+.cart-button img{
+    width: 30px;
+    height: 30px;
+}
+
