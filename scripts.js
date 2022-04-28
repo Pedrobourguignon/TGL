@@ -5,7 +5,8 @@ let selectedGame = {
 }
 let selectedNumber = [];
 let cartList = [];
-
+let somaValores = [];
+let id = 0;
 
 function initialGameSelect(){
     return document.querySelector('.button-of-games').click();
@@ -16,6 +17,7 @@ function createButtonsForGame(){
     listGames[0].forEach(element => {
         let btn = document.createElement("button");
         btn.innerText = element.type;
+        btn.style.background = 'white';
         btn.style.color = element.color;
         btn.style.border = `solid ${element.color}`;
         btn.setAttribute('class', 'button-of-games'); 
@@ -30,13 +32,15 @@ function getAllGames(){
     var ajax = new XMLHttpRequest();
     ajax.open('GET', 'games.json', true);
     ajax.send()
-  
     ajax.onreadystatechange = () => {
       if (ajax.readyState === 4 && ajax.status ===200){
         listGames.push(JSON.parse(ajax.responseText).types);
         createButtonsForGame();
         initialGameSelect();
-
+        hendlerAddCart();
+        hendlerSaveButton();
+        clearGameButton();
+        saveButton();
       }
     }
   }
@@ -110,11 +114,11 @@ function selectedNumbers(){
                return alert("você passou do limite");
             }
             if(!selectedNumber.find(element => element === numbers[i].value)){ 
-                numbers[i].style.background = 'red';
+                numbers[i].style.background = '#57eba1';
                 selectedNumber.push(numbers[i].value);
             }
             else{
-                numbers[i].style.background = 'white';
+                numbers[i].style.background = '#c5c9c7';
                 selectedNumber.splice(numbers[i].value);
             }
         })
@@ -141,7 +145,7 @@ function randomNumbersForButton(){
 function clearAllButtons(){
     const btn = document.getElementsByClassName('number-button');
     for(let i = 0; i < btn.length; i++){
-        btn[i].style.background = 'white';
+        btn[i].style.background = '#c5c9c7';
         selectedNumber.splice(btn[i].value);
     }
 }
@@ -162,32 +166,127 @@ function clearGameButton(){
     clearButton.addEventListener('click', () => {
         clearAllButtons();
     })
-    
-}
-clearGameButton();
-
-
-function cartButton(){
-    const btn = document.getElementsByClassName('number-button');
-    cartList.push(selectedNumber);
 }
 
-function cart(){
+function hendlerAddCart(){
     const cartBtn = document.getElementsByClassName('cart-button')[0];
     cartBtn.addEventListener('click', () => { 
-    cartButton();
-    gameList();
-    cartList.splice(selectedNumber);
+        let limit = selectedGame['max-number'];
+        const game = {
+            id: id,
+            type: selectedGame.type,
+            numbers: selectedNumber,
+            price: selectedGame.price,
+            color: selectedGame.color
+            }
+        id++;
+        if(selectedNumber.length < limit){
+            return alert('Você não escolheu a quantidade certa');
+        }
+        cartList.push(game);
+        gameList();
+        selectedNumber =[];
+        calculateTotalPrice();
+        clearAllButtons();
     })
 }
-cart();
 
 function gameList(){
     const $divcart = document.getElementsByClassName('cart-list')[0];
+    $divcart.innerHTML = '';
+    cartList.forEach(item =>{
+        let gameCartDiv = document.createElement('div');
+        let gameCartInfosDiv = document.createElement('div');
+        let priceTypeCartDiv = document.createElement('div');
+        
         let newList = document.createElement('p');
-        newList.innerText= cartList + selectedGame.type + 'R$' + selectedGame.price;
-        $divcart.appendChild(newList);
+        let newH2 = document.createElement('h2');
+        let newBtn = document.createElement('button');
+        let newSpn = document.createElement('span');
+        
+        gameCartDiv.setAttribute('class', 'game-cart');
+        gameCartInfosDiv.setAttribute('class', 'game-cart-div');
+        
+        priceTypeCartDiv.setAttribute('class', 'price-type');
+        
+        newList.setAttribute('class', 'game-cart-price');
+        newH2.setAttribute('class', 'game-cart-numbers');
+        newSpn.setAttribute('class','game-cart-type');
+        
+        newBtn.setAttribute('class', 'delete-btn');
+        hendlerTrashButton(newBtn);
+        newBtn.innerHTML = '<img src="./assets/icons/trash.svg"/>';
+        newBtn.value = item.id;
+        newH2.innerText = item.numbers;
+        newSpn.innerText = item.type;
+        newSpn.style.color = item.color;
+        newList.innerText = 'R$' + item.price;
+        
+        priceTypeCartDiv.appendChild(newSpn);
+        priceTypeCartDiv.appendChild(newList);
+        
+        gameCartInfosDiv.style.borderLeft = `3px ${item.color} solid`;
+        gameCartInfosDiv.style.borderRadius = '3px'
+        gameCartInfosDiv.appendChild(newH2);
+        gameCartInfosDiv.appendChild(priceTypeCartDiv);
+        
+        gameCartDiv.appendChild(newBtn);
+        gameCartDiv.appendChild(gameCartInfosDiv);
+        
+        $divcart.appendChild(gameCartDiv);
+    })
+}
+    
+
+
+function calculateTotalPrice(){
+    const $divTotal = document.getElementsByClassName('price')[0];
+    let totalPrice = cartList.reduce((total , cartList) =>{
+        return total + cartList.price
+    },0);
+    $divTotal.innerText = 'R$' + totalPrice;
+    return totalPrice;
+}
+
+function hendlerSaveButton(){
+    const $divSaveButton = document.getElementsByClassName('save-button')[0];
+    $divSaveButton.addEventListener('click', () =>{
+    })
+}
+
+function hendlerTrashButton(trashBtn){
+    trashBtn.addEventListener('click', () => deleteProduct(trashBtn.value))
 
 }
 
+function deleteProduct(id){
+    cartList = cartList.filter(item => item.id != id)
+    gameList();
+    calculateTotalPrice();
+}
 
+function saveButton(){
+    let saveBtn = document.getElementsByClassName('save-button')[0];
+    saveBtn.addEventListener('click', () => {
+        resetCart();
+    })
+}
+
+function resetCart(){
+    const resultTotalPrice = calculateTotalPrice();
+    if (cartList.length >= 1 && resultTotalPrice <= 30){
+        resetGame();
+    }
+
+    else{
+        alert('Voce precisa escolher pelo menos um jogo e o valor máximo para jogos é R$ 30');
+    }
+}
+
+function resetGame(){
+    cartList = [];
+    clearAllButtons();
+    gameList();
+    selectedNumber = [];
+    calculateTotalPrice();
+}

@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,900&display=swap');
 body{
-    margin: 0 100px;
+    margin: 0;
     display: grid;
     height: 100vh;
     grid-template-areas: 
@@ -7,27 +8,45 @@ body{
     "main aside"
     "footer footer";
 
-    grid-template-rows: 80px 1fr 30px;
+    grid-template-rows: 76px 1fr 80px;
     grid-template-columns: 1fr 500px;
-
 }
 
 header{
     grid-area: header;
-
+    border-bottom: solid 1px #7d8085;
+    padding: 0 100px;
 }
 
 main{
     grid-area: main;
+    padding: 0 100px
 }
 
 aside{
     grid-area: aside;
+    display: flex;
+    justify-content: center;
 }
 
 footer{
-    background-color: gray;
     grid-area: footer;
+    padding: 0 100px;
+    border-top: solid 1px #7d8085;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a{
+    text-decoration: none;
+    font: italic normal bold 20px/70px Helvetica;
+    color: #707070;
+}
+
+p{
+    font-family: 'Roboto', sans-serif;
+    color: grey;
 }
 
 .head{
@@ -37,12 +56,18 @@ footer{
 }
 
 .logo a{
-    text-decoration: none;
-    border-bottom: 6px solid #b5c601;
-    border-radius: 6px;
-    font-size: 40px;
-    color: grey;
+    font-size: 44px;
 }
+.logo::after{
+    content: '';
+    display: block;
+    width: 80px;
+    border-bottom: 6px solid #B5C401;
+    border-radius: 6px;
+}
+
+
+
 
 .header-buttons{
     width: 100vw;
@@ -75,6 +100,7 @@ footer{
 
 .container{
     padding: 80px 0 0 0;
+
 }
 
 .container p{
@@ -102,14 +128,180 @@ footer{
     align-items: center;
     margin: 0 20px 0 5px;
 }
+
+.games-options{
+    display: flex;
+}
+
+.games-options button{
+    background-color: white;
+}
+
 .cart-button{
-    background-color: green;
+    background-color: #57eba1;
+    color: white;
     width: 200px;
     height: 50px;
+    border: 1px solid #57eba1;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cart-button img{
+    color: white;
     width: 30px;
     height: 30px;
+    padding: 10px;
 }
 
+
+
+.games-list-numbers button{
+    width: 50px;
+    height: 50px;
+    background: #c5c9c7;
+    border-radius: 100px;
+    border: none;
+    margin: 5px 5px ;
+}
+
+.finish-game button{
+    height: 50px;
+    width: 200px;
+    border: 1px solid #57eba1;
+    border-radius: 10px;
+    color: #57eba1;
+    background-color: white;
+    margin-bottom: 10px;
+    margin-right: 10px;
+
+}
+
+.finish-game button:hover{
+    background-color: #57eba1;
+    color:white;
+    height: 50px;
+    width: 200px;
+    border: 1px solid #57eba1;
+    border-radius: 10px;
+}
+
+.finish-buttons{
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0 50px 0;
+}
+
+.cart{
+    background-color: white;
+    width: 400px;
+    height: 500px;
+    border: solid 1px #d7dbd9;
+    border-radius: 10px;
+    position: absolute;
+    top: 180px; 
+}
+
+.delete-btn{
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: white;
+}
+
+.delete-btn img{
+    width: 20px;
+    height: 20px;
+}
+
+.cart-menu{
+    padding: 30px 0 5px 30px;
+    font-size: 25px;
+    font-style: italic;
+}
+
+.cart-list{
+    height: 300px;
+    font-size: larger;
+    color: #575958;
+    word-break: break-all;
+    padding: 0 0 0 40px;
+    overflow: auto;
+}
+
+
+.save-button {
+    font-size: 30px;
+    font-style: italic;
+    color:#57eba1 ;
+    width: 400px;
+    height: 80px;
+    border: none;
+    border-radius: 10px;
+    position: absolute;
+    top: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: large;
+}
+
+.save-button img{
+    width: 30px;
+    height: 30px;
+    margin: 0 10px;
+}
+
+.cart-price{
+    position: absolute;
+    top: 380px;
+    margin-left: 20px;
+    display: flex;
+
+}
+
+.cart-price p{
+    padding: 5px;
+    font-size: 30px;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+}
+
+.game-cart{
+    margin: 10px 0 0 0;
+    display: flex;
+    align-items: center;
+}
+
+.game-bet-text{
+    font-style: italic;
+}
+
+.game-cart-div{
+    padding: 0 10px;
+}
+
+.game-cart-numbers {
+    width: 250px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.price-type{
+    display: flex;
+    align-items: center;
+}
+
+.price-type p{
+    padding: 0 10px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.cart-price .price{
+    font-size: 22px;
+    font-weight: 300;
+}
